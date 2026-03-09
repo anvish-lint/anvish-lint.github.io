@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Anvish</title>
+    <meta name="description" content="Anvish is a Rust reimplementation of ShellCheck inspired by Ruff.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/styles.css">
+  </head>
+  <body>
+    <div class="page-shell"></div>
+    <main class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Your anvil for shell scripts.</p>
+          <h1>Anvish</h1>
+          <p class="lede">
+            A Rust reimplementation of ShellCheck inspired by Ruff.
+          </p>
+        </div>
+        <div class="hero-side">
+          <div class="hero-actions">
+            <label class="theme-inline" for="theme-select">
+              <span>Theme:</span>
+              <select id="theme-select">
+                <option value="system">System</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
+            </label>
+            <nav class="hero-links" aria-label="Project links">
+              <a href="https://github.com/nE0sIghT/anvish" target="_blank" rel="noreferrer">GitHub</a>
+              <a href="https://github.com/nE0sIghT/anvish/releases" target="_blank" rel="noreferrer">Releases</a>
+            </nav>
+          </div>
+          <p class="license-note">
+            GPL-3.0 licensed.
+            <a href="./LICENSE" target="_blank" rel="noreferrer">License</a>
+          </p>
+        </div>
+      </header>
+
+      <section class="workspace-card">
+        <div class="toolbar">
+          <div class="toolbar-group">
+            <label>
+              <span>Shell</span>
+              <select id="shell-select">
+                <option value="">Auto</option>
+                <option value="bash">bash</option>
+                <option value="sh">sh</option>
+                <option value="dash">dash</option>
+                <option value="ksh">ksh</option>
+                <option value="busybox">busybox</option>
+              </select>
+            </label>
+            <label>
+              <span>Severity</span>
+              <select id="severity-select">
+                <option value="style">style</option>
+                <option value="info">info</option>
+                <option value="warning">warning</option>
+                <option value="error">error</option>
+              </select>
+            </label>
+            <label>
+              <span>Example</span>
+              <select id="example-select">
+                <option value="unsafe-split">Unsafe split</option>
+                <option value="unused-export">Unused metadata</option>
+                <option value="strict-mode">Strict mode footgun</option>
+              </select>
+            </label>
+          </div>
+          <div class="toolbar-group toolbar-actions">
+            <button id="lint-button" type="button">Lint</button>
+            <button id="share-button" type="button" class="ghost">Copy link</button>
+          </div>
+        </div>
+        <div class="workspace-grid">
+          <section class="editor-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Editor</h2>
+                <p>
+                  <strong class="lede-break">Try it out here.</strong>
+                  <span class="lede-break">This playground runs Anvish directly in your browser via WebAssembly.</span>
+                </p>
+              </div>
+              <div class="status-pill" id="status-pill">Loading runtime…</div>
+            </div>
+            <div id="editor"></div>
+          </section>
+
+          <aside class="results-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Diagnostics</h2>
+                <p id="summary-line">No run yet.</p>
+              </div>
+              <div class="summary-badges" id="summary-badges"></div>
+            </div>
+            <ol class="diagnostic-list" id="diagnostic-list"></ol>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js"></script>
+    <script type="module" src="./assets/app.js"></script>
+  </body>
+</html>
