@@ -48,25 +48,27 @@ fn main() -> Result<()> {
     let path = Path::new("playground.sh");
     let syntax = syntax::analyze(&content)?;
     let root = syntax.ast.root();
-    let pending = analysis::collect_pending(
-        &content,
-        root,
-        ParseState {
-            parse_cutoff: syntax.parse_cutoff,
-            sc1089_positions: syntax.sc1089_positions,
-            parse_diagnostics: syntax.parse_diagnostics,
-        },
-        cfg.include.as_ref(),
-        &cfg.exclude,
-        cfg.dialect_override,
-        path,
-        cfg.external_sources,
-        cfg.source_paths.as_slice(),
-        cfg.extended_analysis,
-        cfg.enable_unassigned_uppercase,
-    );
-    let diagnostics =
-        pipeline::finalize_diagnostics(&content, root, pending, &cfg, "playground.sh");
+    let pending = if syntax.run_rules {
+        analysis::collect_pending(
+            &content,
+            &syntax.analysis_content,
+            root,
+            ParseState {
+                parse_diagnostics: syntax.parse_diagnostics,
+            },
+            cfg.include.as_ref(),
+            &cfg.exclude,
+            cfg.dialect_override,
+            path,
+            cfg.external_sources,
+            cfg.source_paths.as_slice(),
+            cfg.extended_analysis,
+            cfg.enable_unassigned_uppercase,
+        )
+    } else {
+        syntax.parse_diagnostics
+    };
+    let diagnostics = pipeline::finalize_diagnostics(&content, root, pending, &cfg, "playground.sh");
     serde_json::to_writer(io::stdout(), &diagnostics)?;
     Ok(())
 }

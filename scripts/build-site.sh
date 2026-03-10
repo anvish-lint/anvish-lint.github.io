@@ -36,6 +36,10 @@ export CC_wasm32_wasip1=clang
 export WASI_SYSROOT=/usr
 export CFLAGS_wasm32_wasip1="--sysroot=/usr -I/usr/include/wasm32-wasi"
 
+if command -v rustup >/dev/null 2>&1; then
+  rustup target add wasm32-wasip1 >/dev/null
+fi
+
 cargo build --manifest-path "$ROOT/runner/Cargo.toml" --release --target wasm32-wasip1
 cp "$ROOT/runner/target/wasm32-wasip1/release/anvish-site-runner.wasm" \
   "$DIST/pkg/anvish-site-runner.wasm"
